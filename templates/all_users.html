@@ -1,0 +1,75 @@
+{% extends 'bootstrap/base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block content %}
+{% include "header.html" %}
+
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('https://www.pngkey.com/png/full/412-4125636_many-users-many-user-types-marketing-communication-advertising.png')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="page-heading">
+            <h1>All Users</h1>
+            <span class="subheading">Here you can see all the users and the user type of them.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto content">
+
+      </div>
+    </div>
+
+  </div>
+  <div class="container" style="margin-top: 3%;">
+    <div>
+      <table class="table">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+             {% for message in messages %}
+                    <p  style="color:red">{{ message }}</p>
+               {% endfor %}
+
+        {% endif %}
+      {% endwith %}
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">User Name</th>
+      <th scope="col">User Email</th>
+      <th scope="col">User Type</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for user in users : %}
+      <form action={{url_for("updateUserType", userID=user.id)}}>
+        <tr>
+          <th scope="row">{{loop.index}}</th>
+          <td>{{user.name}}</td>
+          <td>{{user.email}}</td>
+          <td><select class="custom-select" id="inputGroupSelect01" name="userType">
+            {% for usertype in user_types : %}
+        <option value = {{usertype.user_type_id}} {{UsertypeID_selected(in_userID = user.id, in_currentUsertypeID=usertype.user_type_id)}}>{{usertype.user_type_name }}</option>
+            {% endfor %}
+          </select></td>
+          <td><input type="submit" value="Submit"></td>
+        </tr>
+      </form>
+    {% endfor %}
+
+  </tbody>
+</table>
+
+
+    </div>
+  </div>
+
+{% include "footer.html" %}
+{% endblock %}
