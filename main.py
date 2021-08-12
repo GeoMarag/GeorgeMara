@@ -11,9 +11,12 @@ from flask_gravatar import Gravatar
 from functools import wraps
 from flask import abort, Markup
 import hashlib
+import os
+from dotenv import *
+load_dotenv()
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = b'\x84(\x1c\x94v\x01s\x1b\xf2\x03H?/\x19\xd89\xf2'
+app.config['SECRET_KEY'] = os.getenv('app_config_587')
 ckeditor = CKEditor(app)
 Bootstrap(app)
 gravatar = Gravatar(app,
